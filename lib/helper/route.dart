@@ -2,6 +2,7 @@ import 'package:doulingo_fake/views/home_view/home_page.dart';
 import 'package:doulingo_fake/views/instruction_view/instuction_page.dart';
 import 'package:doulingo_fake/views/introduce_view/introduce_page.dart';
 import 'package:doulingo_fake/views/login_view/login_page.dart';
+import 'package:doulingo_fake/views/login_view/signup_page.dart';
 import 'package:get/get.dart';
 
 class RoutePage {
@@ -22,7 +23,7 @@ class RoutePage {
     ),
     GetPage(
       name: signUpPage,
-      page: () => const LoginPage(),
+      page: () => const SignUpPage(),
     ),
     GetPage(
       name: instructionPage,
