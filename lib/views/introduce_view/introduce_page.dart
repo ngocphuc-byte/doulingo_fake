@@ -1,4 +1,5 @@
 import 'package:doulingo_fake/helper/route.dart';
+import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/login_view/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,9 +22,10 @@ class IntroducePage extends StatelessWidget {
   Widget build(BuildContext context) {
     nextPage();
     return Scaffold(
-      body: Stack(children: [
+      body: Stack(
+        children: [
         Container(
-          color: Color.fromARGB(255, 3, 32, 78),
+          color: Constant.mainColor,
           padding: EdgeInsets.only(top: 30.h, bottom: 10.h),
           width: double.maxFinite,
           height: double.maxFinite,

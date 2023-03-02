@@ -7,6 +7,7 @@ import 'package:doulingo_fake/views/home_view/notification.dart';
 import 'package:doulingo_fake/views/home_view/setting.dart';
 import 'package:doulingo_fake/views/home_view/top_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,21 +21,40 @@ class HomePage extends StatelessWidget {
     BottomController _bottomController = Get.find();
     return Scaffold(
       backgroundColor: Constant.mainColor,
-      body: Container(
+      body: SizedBox(
         child: Obx(
           () => Column(
             children: [
               TabBarWidget(),
-              if (_bottomController.currentIndex.value == 0) Home(),
-              if (_bottomController.currentIndex.value == 1) BoxPage(),
-              if (_bottomController.currentIndex.value == 2) InformationPage(),
-              if (_bottomController.currentIndex.value == 3) NotificationPage(),
-              if (_bottomController.currentIndex.value == 4) SettingPage(),
+              if (_bottomController.currentIndex.value == 0) const Home(),
+              if (_bottomController.currentIndex.value == 1) const BoxPage(),
+              if (_bottomController.currentIndex.value == 2)
+                const InformationPage(),
+              if (_bottomController.currentIndex.value == 3)
+                const NotificationPage(),
+              if (_bottomController.currentIndex.value == 4)
+                const SettingPage(),
             ],
           ),
         ),
       ),
       bottomNavigationBar: const BottomTabWidget(),
+      floatingActionButton: Obx(
+        () => Container(
+          child: _bottomController.indexScroll > 4
+              ? FloatingActionButton(
+                  child: Icon(
+                    Icons.keyboard_double_arrow_up_sharp,
+                    size: 28.sp,
+                    color: Constant.white,
+                  ),
+                  onPressed: () {
+                    _bottomController.toHeadPage();
+                  },
+                )
+              : null,
+        ),
+      ),
     );
   }
 }

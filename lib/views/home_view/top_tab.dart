@@ -28,8 +28,14 @@ class TabBarWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Lottie.asset('assets/images/logo_home.json',
-                    width: 40.w, height: 40.h, repeat: false),
+                // color: Colors.amber,
+                Lottie.asset(
+                  'assets/images/logo_home.json',
+                  fit: BoxFit.fitHeight,
+                  width: 40.w,
+                  height: 40.h,
+                  repeat: false,
+                ),
                 Image.asset(
                   'assets/images/owl_logo.png',
                   width: 30.w,
@@ -45,7 +51,7 @@ class TabBarWidget extends StatelessWidget {
                     onTap: () {},
                     child: Icon(
                       Icons.menu,
-                      color: Colors.white,
+                      color: Colors.lightBlue,
                       size: 28.sp,
                     ),
                   ),
@@ -57,7 +63,7 @@ class TabBarWidget extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.bold,
                       fontSize: 22.sp,
-                      color: Colors.white,
+                      color: Colors.lightBlue,
                     ),
                   ),
                 )
