@@ -1,29 +1,23 @@
+import 'dart:async';
+
+import 'package:doulingo_fake/controllers/bottom_controller.dart';
 import 'package:doulingo_fake/helper/route.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/login_view/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IntroducePage extends StatelessWidget {
   const IntroducePage({super.key});
 
-  void nextPage() async {
-    await Future.delayed(
-      const Duration(seconds: 5),
-      () {
-        Get.offAndToNamed(RoutePage.loginPage);
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    nextPage();
+    BottomController bottomController = Get.find();
     return Scaffold(
-      body: Stack(
-        children: [
+      body: Stack(children: [
         Container(
           color: Constant.mainColor,
           padding: EdgeInsets.only(top: 30.h, bottom: 10.h),
@@ -46,9 +40,26 @@ class IntroducePage extends StatelessWidget {
                     height: 100.h,
                     width: 100.w),
               ),
-              const Align(
+              Align(
                 alignment: Alignment.bottomCenter,
-                child: LinearProgressIndicator(),
+                child: SizedBox(
+                  width: 300.w,
+                  height: 30.h,
+                  child: Obx(
+                    () {
+                      bottomController.randomIndicator();
+                      return LiquidLinearProgressIndicator(
+                        value: bottomController.valueIndicator.value,
+                        valueColor: AlwaysStoppedAnimation(Constant.lightBlue),
+                        backgroundColor: Constant.white,
+                        borderColor: Constant.mainColor,
+                        borderWidth: 5,
+                        direction: Axis.horizontal,
+                        center: Text('Loading...'),
+                      );
+                    },
+                  ),
+                ),
               ),
             ],
           ),

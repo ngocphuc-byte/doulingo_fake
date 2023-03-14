@@ -1,3 +1,4 @@
+import 'package:doulingo_fake/controllers/instruction_controller.dart';
 import 'package:doulingo_fake/helper/route.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/home_view/home_page.dart';
@@ -12,8 +13,10 @@ class InstructionPage extends StatelessWidget {
   const InstructionPage({super.key});
   @override
   Widget build(BuildContext context) {
+    InstructionController instructionController = Get.find();
     PageController _pageController =
         PageController(initialPage: 0, viewportFraction: 1);
+
     var _instructionList = [
       {
         "image": 'assets/images/instruction1.json',
@@ -39,6 +42,8 @@ class InstructionPage extends StatelessWidget {
             allowImplicitScrolling: false,
             pageSnapping: true,
             itemCount: _instructionList.length,
+            onPageChanged: (value) =>
+                instructionController.followIndexPage(value),
             itemBuilder: (context, index) {
               var item = _instructionList[index] as Map;
               return Column(
@@ -61,10 +66,10 @@ class InstructionPage extends StatelessWidget {
                       //
                       child: Text(
                         item['text'],
-                        style: GoogleFonts.poppins(
-                            fontSize: 28.sp,
+                        style: GoogleFonts.sourceSans3(
+                            fontSize: Constant.largeTextSize,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color: Constant.white),
                       ),
                     ),
                   )
@@ -87,27 +92,31 @@ class InstructionPage extends StatelessWidget {
                       curve: Curves.easeInOutQuad);
                 }),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              margin: EdgeInsets.only(bottom: 25.h, right: 20.w),
-              width: 45.w,
-              height: 45.h,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: IconButton(
-                onPressed: () {
-                  Get.offAndToNamed(RoutePage.homePage);
-                },
-                icon: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          )
+          Obx(() {
+            return instructionController.indexPage == 2
+                ? Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 25.h, right: 20.w),
+                      width: 45.w,
+                      height: 45.h,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          Get.offAndToNamed(RoutePage.homePage);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox();
+          }),
         ],
       ),
     );

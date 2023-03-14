@@ -19,7 +19,7 @@ class BoxInformation extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Constant.mainColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10.sp),
         boxShadow: const [
           BoxShadow(
             offset: Offset(0, 3),
@@ -53,15 +53,15 @@ class BoxInformation extends StatelessWidget {
             children: [
               Text(
                 '${content}',
-                style: GoogleFonts.sanchez(
+                style: GoogleFonts.sourceSans3(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     color: Constant.white),
               ),
               Text(
                 '${title}',
-                style:
-                    GoogleFonts.sanchez(fontSize: 14.sp, color: Constant.white),
+                style: GoogleFonts.sourceSans3(
+                    fontSize: Constant.smallTextSize, color: Constant.white),
               ),
             ],
           )

@@ -14,7 +14,7 @@ class TabBarWidget extends StatelessWidget {
         height: 100.h,
         padding: EdgeInsets.only(left: 14.w, right: 14.w),
         decoration: BoxDecoration(
-          color: Constant.subColor,
+          color: Constant.mainColor,
           boxShadow: const [
             BoxShadow(
               color: Colors.grey,
@@ -60,9 +60,9 @@ class TabBarWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     'Tiếng anh cơ bản',
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.sourceSans3(
                       fontWeight: FontWeight.bold,
-                      fontSize: 22.sp,
+                      fontSize: Constant.largeTextSize,
                       color: Colors.lightBlue,
                     ),
                   ),

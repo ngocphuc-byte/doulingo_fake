@@ -1,4 +1,6 @@
 import 'package:doulingo_fake/utils/constant.dart';
+import 'package:doulingo_fake/views/information_view/achievement._widget.dart';
+import 'package:doulingo_fake/views/information_view/header_information.dart';
 import 'package:doulingo_fake/widgets/box_information_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,68 +28,8 @@ class InformationPage extends StatelessWidget {
 
             // ),
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(150.h),
-              child: Container(
-                margin: EdgeInsets.only(bottom: 5.sp),
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(
-                  10.sp,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 200.w,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Phúc',
-                            style: GoogleFonts.roboto(
-                                fontSize: 20.sp,
-                                color: Constant.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'ngocphuc00001@gmail.com',
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.sanchez(
-                              fontSize: 14.sp,
-                              color: Constant.white,
-                            ),
-                          ),
-                          Text(
-                            'Đã tham gia vào 10/02/2023',
-                            style: GoogleFonts.sanchez(
-                              fontSize: 14.sp,
-                              color: Constant.white,
-                            ),
-                          ),
-                          Image.asset(
-                            'assets/images/america_icon.png',
-                            fit: BoxFit.fitWidth,
-                            width: 30.w,
-                            height: 30.h,
-                          ),
-                        ],
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: 35.sp,
-                      backgroundImage: const NetworkImage(
-                          'https://images2.thanhnien.vn/Uploaded/tuyenth/2022_11_02/a5-5205.png'),
-                    ),
-                  ],
-                ),
-                // Text(
-                //   'Profile',
-                //   style: GoogleFonts.roboto(
-                //     color: Constant.lightBlue,
-                //     fontWeight: FontWeight.bold,
-                //     fontSize: 22.sp,
-                //   ),
-                // ),
-              ),
+              preferredSize: Size.fromHeight(125.h),
+              child: const HeaderInformation(),
             ),
           ),
           SliverToBoxAdapter(
@@ -116,7 +58,7 @@ class InformationPage extends StatelessWidget {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Constant.mainColor,
-                            borderRadius: BorderRadius.circular(12.sp),
+                            borderRadius: BorderRadius.circular(10.sp),
                             boxShadow: const [
                               BoxShadow(
                                 offset: Offset(0, 3),
@@ -146,8 +88,8 @@ class InformationPage extends StatelessWidget {
                               ),
                               Text(
                                 'Chỉnh sửa thông tin',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 18.sp,
+                                style: GoogleFonts.sourceSans3(
+                                  fontSize: Constant.mediumTextSize,
                                   color: Constant.lightBlue,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -160,7 +102,7 @@ class InformationPage extends StatelessWidget {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Constant.mainColor,
-                            borderRadius: BorderRadius.circular(12.sp),
+                            borderRadius: BorderRadius.circular(10.sp),
                             boxShadow: const [
                               BoxShadow(
                                 offset: Offset(0, 3),
@@ -190,14 +132,14 @@ class InformationPage extends StatelessWidget {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    height: 200.h,
+                    height: 170.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           padding: EdgeInsets.only(right: 10.w, left: 10.w),
-                          alignment: Alignment.centerLeft,
-                          height: 50.h,
+                          alignment: Alignment.bottomLeft,
+                          height: 40.h,
                           child: Text(
                             'Thống kê',
                             style: GoogleFonts.roboto(
@@ -207,47 +149,43 @@ class InformationPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
+                        Container(
                           padding: EdgeInsets.only(right: 10.w, left: 10.w),
-                          child: SizedBox(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                BoxInformation(
-                                    iconBox: Icons.electric_bike,
-                                    title: 'Ngày streak',
-                                    content: '0',
-                                    colorIcon: Constant.lightBlue),
-                                BoxInformation(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BoxInformation(
                                   iconBox: Icons.electric_bike,
-                                  title: 'Tổng số level',
+                                  title: 'Ngày streak',
                                   content: '0',
-                                  colorIcon: Constant.yellow,
-                                ),
-                              ],
-                            ),
+                                  colorIcon: Constant.lightBlue),
+                              BoxInformation(
+                                iconBox: Icons.electric_bike,
+                                title: 'Tổng số level',
+                                content: '0',
+                                colorIcon: Constant.yellow,
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
+                        Container(
                           padding: EdgeInsets.only(right: 10.w, left: 10.w),
-                          child: Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                BoxInformation(
-                                  iconBox: Icons.electric_bike,
-                                  title: 'Ngày streak',
-                                  content: '0',
-                                  colorIcon: Constant.green,
-                                ),
-                                BoxInformation(
-                                  iconBox: Icons.electric_bike,
-                                  title: 'Ngày streak',
-                                  content: '0',
-                                  colorIcon: Constant.purple,
-                                ),
-                              ],
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BoxInformation(
+                                iconBox: Icons.electric_bike,
+                                title: 'Ngày streak',
+                                content: '0',
+                                colorIcon: Constant.green,
+                              ),
+                              BoxInformation(
+                                iconBox: Icons.electric_bike,
+                                title: 'Ngày streak',
+                                content: '0',
+                                colorIcon: Constant.purple,
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -272,7 +210,7 @@ class InformationPage extends StatelessWidget {
                       height: 360.h,
                       width: 350.w,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14.sp),
+                        borderRadius: BorderRadius.circular(10.sp),
                         border: Border.all(
                           width: 2,
                           color: Constant.grey,
@@ -289,70 +227,10 @@ class InformationPage extends StatelessWidget {
                                 height: 300.h,
                                 alignment: Alignment.topCenter,
                                 child: ListView.separated(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return Container(
-                                        height: 80.h,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              width: 80.w,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        16.sp),
-                                                child: Image.network(
-                                                    'https://wallpapercave.com/dwp1x/wp4278771.png'),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 200.w,
-                                              alignment: Alignment.centerLeft,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                      'Học giả',
-                                                      style: GoogleFonts.roboto(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Constant.white,
-                                                        fontSize: 20.sp,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    height: 50.h,
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    16.sp),
-                                                        color:
-                                                            Constant.lightBlue),
-                                                    child: Text(
-                                                      'Đã đạt',
-                                                      style: GoogleFonts.roboto(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Constant.white,
-                                                        fontSize: 20.sp,
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
+                                      return const AchievementWidget();
                                     },
                                     separatorBuilder: (context, index) =>
                                         Divider(
@@ -363,8 +241,8 @@ class InformationPage extends StatelessWidget {
                           InkWell(
                             onTap: () {},
                             borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(14.sp),
-                                bottomRight: Radius.circular(14.sp)),
+                                bottomLeft: Radius.circular(10.sp),
+                                bottomRight: Radius.circular(10.sp)),
                             child: Container(
                               margin: EdgeInsets.only(top: 6.h),
                               alignment: Alignment.center,

@@ -1,5 +1,7 @@
 import 'package:doulingo_fake/controllers/room_controller.dart';
 import 'package:doulingo_fake/utils/constant.dart';
+import 'package:doulingo_fake/views/room_view/speaking_page.dart';
+import 'package:doulingo_fake/views/room_view/word_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -82,165 +84,18 @@ class RoomPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: GetBuilder<RoomController>(
-                builder: (_) {
-                  return PageView.builder(
-                    controller: roomController.pageController,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    itemBuilder: (context, indexPage) {
-                      return Container(
-                        height: 625.h,
-                        width: 350.w,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 350.w,
-                              height: 75.h,
-                              padding: EdgeInsets.only(left: 15.w, right: 15.w),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Chọn từ điền vào chỗ trống',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 20.sp,
-                                  color: Constant.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 350.w,
-                              height: 300.h,
-                              padding: EdgeInsets.only(left: 15.w, right: 15.w),
-                              alignment: Alignment.centerLeft,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                      height: 140.h,
-                                      width: 350.w,
-                                      alignment: Alignment.centerLeft,
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                              width: 1, color: Constant.grey),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            child: Lottie.asset(
-                                              'assets/images/talking.json',
-                                              repeat: false,
-                                            ),
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            padding: EdgeInsets.fromLTRB(
-                                                10.w, 10.h, 10.w, 10.h),
-                                            height: 130.h,
-                                            width: 160.w,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.sp),
-                                              border: Border.all(
-                                                width: 1,
-                                                color: Constant.grey,
-                                              ),
-                                            ),
-                                            child: Text(
-                                              'Trái táo là gì ?',
-                                              style: GoogleFonts.roboto(
-                                                  color: Constant.white,
-                                                  fontSize: 16.sp),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                  Container(
-                                    height: 80.h,
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                            width: 1, color: Constant.grey),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 80.h,
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                            width: 1, color: Constant.grey),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              // alignment: Alignment.center,
-                              width: 350.w,
-                              height: 200.h,
-                              child: Center(
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: 4,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 3,
-                                  ),
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      alignment: Alignment.center,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Constant.mainColor,
-                                            minimumSize: Size(80.w, 40.h),
-                                            maximumSize: Size(140.w, 40.h),
-                                            elevation: 8.sp,
-                                            side: BorderSide(
-                                                width: 2,
-                                                color: Constant.grey
-                                                    .withOpacity(0.5))),
-                                        onPressed: () {},
-                                        child: Text('Apple $indexPage'),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            Container(
-                                alignment: Alignment.center,
-                                width: 350.w,
-                                height: 50.h,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(300.w, 40.h),
-                                    backgroundColor: Constant.green,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8.sp)),
-                                  ),
-                                  onPressed: () {
-                                    roomController.jumpPage(indexPage+1);
-                                  },
-                                  child: Text(
-                                    'Tiếp tục',
-                                    style: GoogleFonts.roboto(
-                                      fontSize: 16.sp,
-                                    ),
-                                  ),
-                                ))
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                }
-              ),
+              child: GetBuilder<RoomController>(builder: (_) {
+                return PageView.builder(
+                  controller: roomController.pageController,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 3,
+                  itemBuilder: (context, indexPage) {
+                    return indexPage == 1
+                        ? SpeakingPage(indexPage: indexPage)
+                        : WordPage(indexPage: indexPage);
+                  },
+                );
+              }),
             )
           ],
         ),

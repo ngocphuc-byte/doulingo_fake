@@ -1,10 +1,10 @@
 import 'package:doulingo_fake/controllers/bottom_controller.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/home_view/bottom_tab.dart';
-import 'package:doulingo_fake/views/home_view/box.dart';
-import 'package:doulingo_fake/views/home_view/information.dart';
-import 'package:doulingo_fake/views/home_view/notification.dart';
-import 'package:doulingo_fake/views/home_view/setting.dart';
+import 'package:doulingo_fake/views/box_view/box.dart';
+import 'package:doulingo_fake/views/information_view/information.dart';
+import 'package:doulingo_fake/views/notification_view/notification.dart';
+import 'package:doulingo_fake/views/setting_view/setting.dart';
 import 'package:doulingo_fake/views/home_view/top_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

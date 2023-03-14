@@ -35,6 +35,7 @@ initial().then(() => {
     Listen_Port().then(() => {
         middleware().then(() => {
             database();
+            console.log(initial());
         });
     });
 });
