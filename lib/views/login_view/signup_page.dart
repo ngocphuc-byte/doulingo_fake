@@ -22,7 +22,7 @@ class _SignUpPageState extends State<SignUpPage>
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.find();
-
+    RxBool isLogin = false.obs;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFD6E2EA),
@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage>
             BoxLoginWidget(
               loginController: loginController,
               textButton: 'Sign up',
-              isLogin: false,
+              isLogin: isLogin,
             )
           ],
         ),

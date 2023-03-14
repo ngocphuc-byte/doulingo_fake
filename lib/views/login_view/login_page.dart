@@ -15,6 +15,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.find();
+    RxBool isLogin = true.obs;
     return Scaffold(
       backgroundColor: const Color(0xFFD6E2EA),
       body: SingleChildScrollView(
@@ -26,7 +27,7 @@ class LoginPage extends StatelessWidget {
             BoxLoginWidget(
               loginController: loginController,
               textButton: 'Login',
-              isLogin: true,
+              isLogin: isLogin,
             )
           ],
         ),
