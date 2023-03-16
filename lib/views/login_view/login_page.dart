@@ -14,14 +14,14 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.find();
+    LoginController loginController = Get.put(LoginController());
     RxBool isLogin = true.obs;
     return Scaffold(
       backgroundColor: const Color(0xFFD6E2EA),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Header(
+            const Header(
                 title:
                     'Hãy đăng nhập và chúng ta sẽ đồng hành cùng nhau bạn nhé !!!'),
             BoxLoginWidget(

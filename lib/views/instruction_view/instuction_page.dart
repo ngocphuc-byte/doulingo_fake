@@ -13,7 +13,8 @@ class InstructionPage extends StatelessWidget {
   const InstructionPage({super.key});
   @override
   Widget build(BuildContext context) {
-    InstructionController instructionController = Get.find();
+    InstructionController instructionController =
+        Get.put(InstructionController());
     PageController _pageController =
         PageController(initialPage: 0, viewportFraction: 1);
 

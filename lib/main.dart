@@ -1,7 +1,10 @@
+import 'package:doulingo_fake/bloc/login/login_bloc.dart';
+import 'package:doulingo_fake/bloc/package/package_bloc.dart';
 import 'package:doulingo_fake/helper/dependencies.dart';
 import 'package:doulingo_fake/helper/route.dart';
 import 'package:doulingo_fake/views/introduce_view/introduce_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -19,17 +22,27 @@ class Main extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return GetMaterialApp(
-          initialBinding: Dependencies(),
-          debugShowCheckedModeBanner: false,
-          title: 'First Method',
-          // You can use the library anywhere in the app even in theme
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => LoginBloc(),
+            ),
+            BlocProvider(
+              create: (context) => PackageBloc(),
+            )
+          ],
+          child: GetMaterialApp(
+            initialBinding: Dependencies(),
+            debugShowCheckedModeBanner: false,
+            title: 'First Method',
+            // You can use the library anywhere in the app even in theme
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+            ),
+            home: child,
+            getPages: RoutePage.listRoutePage,
           ),
-          home: child,
-          getPages: RoutePage.listRoutePage,
         );
       },
       child: const IntroducePage(),

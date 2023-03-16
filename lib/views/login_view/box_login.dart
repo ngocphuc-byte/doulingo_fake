@@ -1,11 +1,15 @@
 import 'dart:ffi';
 
+import 'package:doulingo_fake/bloc/login/login_bloc.dart';
 import 'package:doulingo_fake/controllers/login_controller.dart';
+import 'package:doulingo_fake/data/provider/user_provider.dart';
+import 'package:doulingo_fake/data/repository/user_repo.dart';
 import 'package:doulingo_fake/models/user_model.dart';
 import 'package:doulingo_fake/views/login_view/text_field_widget.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -86,23 +90,32 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                       prefixIcon: const Icon(Icons.account_circle),
                     ),
                   ),
-                  TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      label: const Text('Mật khẩu'),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.sp),
-                        borderSide: const BorderSide(color: Colors.transparent),
+                  Obx(
+                    () => TextField(
+                      controller: passwordController,
+                      obscureText: widget.loginController.hidePassword.value,
+                      decoration: InputDecoration(
+                        label: const Text('Mật khẩu'),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.sp),
+                          borderSide:
+                              const BorderSide(color: Colors.transparent),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.sp),
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 1),
+                        ),
+                        prefixIcon: const Icon(Icons.lock),
+                        suffix: GestureDetector(
+                            onTap:
+                                widget.loginController.onHandleHidePassword,
+                            child: widget.loginController.hidePassword.value
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off)),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.sp),
-                        borderSide:
-                            const BorderSide(color: Colors.blue, width: 1),
-                      ),
-                      prefixIcon: const Icon(Icons.lock),
-                      suffix: const Icon(Icons.visibility),
                     ),
                   ),
                   widget.isLogin.value
@@ -128,7 +141,6 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                             prefixIcon: const Icon(Icons.email),
                             suffixIcon: IconButton(
                                 onPressed: () async {
-                                  print(emailController.text);
                                   myauth.setConfig(
                                     appEmail: 'ngocphuc00002@gmail.com',
                                     appName: 'Email OTP',
@@ -195,49 +207,73 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                             },
                           ))
                       : SizedBox(),
-                  SizedBox(
-                    width: 400.w,
-                    height: 50.h,
-                    child: Obx(
-                      () => ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.sp),
+                  BlocListener<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      if (state is LoginLoading) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.transparent,
+                                content: Center(
+                                  child: CircularProgressIndicator(),
+                                )));
+                      } else if (state is LoginError) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.transparent,
+                            content: Text('${state.error}')));
+                      } else if (state is LoginLoaded) {
+                        widget.loginController.Login(state.userModel);
+                      }
+                    },
+                    child: SizedBox(
+                      width: 400.w,
+                      height: 50.h,
+                      child: Obx(
+                        () => ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.sp),
+                              ),
+                              backgroundColor: Constant.mainColor),
+                          onPressed: widget.isLogin.value == true
+                              ? () {
+                                  context.read<LoginBloc>().add(SignIn(
+                                      userModel: UserModel(
+                                          username: usernameController.text,
+                                          password: passwordController.text)));
+                                }
+                              : widget.loginController.value.value == 0
+                                  ? null
+                                  : () async {
+                                      if (await myauth.verifyOTP(
+                                              otp: box1Controller.text +
+                                                  box2Controller.text +
+                                                  box3Controller.text +
+                                                  box4Controller.text) ==
+                                          true) {
+                                        context.read<LoginBloc>().add(SignUp(
+                                            userModel: UserModel(
+                                                username:
+                                                    usernameController.text,
+                                                password:
+                                                    passwordController.text,
+                                                email: emailController.text)));
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    'Somethings wrong here')));
+                                      }
+                                    },
+                          icon: Icon(
+                            Icons.login,
+                            size: 24.sp,
+                          ),
+                          label: Text(
+                            widget.textButton,
+                            style: TextStyle(
+                              fontSize: Constant.mediumTextSize,
+                              letterSpacing: 2.w,
                             ),
-                            backgroundColor: Constant.mainColor),
-                        onPressed: widget.isLogin.value == true
-                            ? () {
-                              widget.loginController.Login();
-                            }
-                            : widget.loginController.value.value == 0
-                                ? null
-                                : () async {
-                                    if (await myauth.verifyOTP(
-                                            otp: box1Controller.text +
-                                                box2Controller.text +
-                                                box3Controller.text +
-                                                box4Controller.text) ==
-                                        true) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  'Sign up successfully')));
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  'Somethings wrong here')));
-                                    }
-                                  },
-                        icon: Icon(
-                          Icons.login,
-                          size: 24.sp,
-                        ),
-                        label: Text(
-                          widget.textButton,
-                          style: TextStyle(
-                            fontSize: Constant.mediumTextSize,
-                            letterSpacing: 2.w,
                           ),
                         ),
                       ),
