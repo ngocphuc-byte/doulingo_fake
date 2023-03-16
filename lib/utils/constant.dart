@@ -14,6 +14,7 @@ class Constant {
   static Color subGreen = Color.fromARGB(255, 2, 86, 5);
   static Color purple = Colors.purple;
   static Color red = Colors.red;
+  static Color subRed = Color.fromARGB(255, 135, 10, 1);
 
   static double largeTextSize = 22.sp;
   static double mediumTextSize = 18.sp;

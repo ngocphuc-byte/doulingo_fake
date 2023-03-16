@@ -8,5 +8,5 @@ class BaseURL {
   String userSignUpURL = '$userURL/create';
   String userSignInURL = '$userURL/checkUser';
 
-  String packageGetAllURL = '$packageURL/getPackage';
+  String packageGetAllURL = '$packageURL/getLevels';
 }
