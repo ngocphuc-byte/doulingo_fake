@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:doulingo_fake/controllers/bottom_controller.dart';
+import 'package:doulingo_fake/data/provider/question_provider.dart';
 import 'package:doulingo_fake/helper/route.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/login_view/login_page.dart';
@@ -15,6 +16,7 @@ class IntroducePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     BottomController bottomController = Get.find();
     return Scaffold(
       body: Stack(children: [

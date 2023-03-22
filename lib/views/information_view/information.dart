@@ -10,15 +10,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/adapters.dart';
 
 class InformationPage extends StatelessWidget {
-  const InformationPage({super.key});
+  InformationPage({super.key});
+
+  final loginBox = Hive.box('login');
+
+  Future<void> _onDeleteUSer() async {
+    await loginBox.deleteAt(0);
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        if(state is LoginOut){
+        if (state is LoginOut) {
           Get.offAndToNamed(RoutePage.loginPage);
         }
       },

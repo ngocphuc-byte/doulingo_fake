@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CardItemWidget extends StatelessWidget {
-  const CardItemWidget({super.key});
-
+  CardItemWidget({super.key, required this.item});
+  var item;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,15 +27,14 @@ class CardItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Apple',
+                    '${item['option']}',
                     style: GoogleFonts.lato(
-                      fontSize: Constant.mediumTextSize,
-                      color: Constant.white,
-                      fontWeight: Constant.midWeight
-                    ),
+                        fontSize: Constant.mediumTextSize,
+                        color: Constant.white,
+                        fontWeight: Constant.midWeight),
                   ),
                   Text(
-                    'Trái táo dai',
+                    '${item['question']}',
                     style: GoogleFonts.lato(
                       fontSize: Constant.smallTextSize,
                       color: Constant.white,

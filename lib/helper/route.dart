@@ -1,3 +1,4 @@
+import 'package:doulingo_fake/models/level_model.dart';
 import 'package:doulingo_fake/views/home_view/home_page.dart';
 import 'package:doulingo_fake/views/instruction_view/instuction_page.dart';
 import 'package:doulingo_fake/views/introduce_view/introduce_page.dart';
@@ -37,7 +38,10 @@ class RoutePage {
     ),
     GetPage(
       name: roomPage,
-      page: () => const RoomPage(),
+      page: () {
+        LevelModel levelModel = Get.arguments;
+        return RoomPage(levelModel: levelModel);
+      },
     ),
   ];
 }

@@ -12,10 +12,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../utils/constant.dart';
 
+// 238
 class BoxLoginWidget extends StatefulWidget {
   BoxLoginWidget(
       {super.key,
@@ -40,8 +42,41 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
   TextEditingController box4Controller = TextEditingController();
 
   EmailOTP myauth = EmailOTP();
+
+  final loginBox = Hive.box('login');
+
+  Future<void> _onSaveUser(Map<String, dynamic> account) async {
+    if (loginBox.length >= 1) {
+      print('has data ${loginBox.length}');
+    } else {
+      await loginBox.add(account);
+    }
+  }
+
+  Future<void> _onDeleteUSer() async {
+    await loginBox.deleteAt(0);
+  }
+
+  void signIn() async {
+    Future.delayed(Duration(seconds: 3), (() {
+      context.read<LoginBloc>().add(
+            SignIn(
+              userModel: UserModel(
+                username: usernameController.text,
+                password: passwordController.text,
+              ),
+            ),
+          );
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (loginBox.length != 0) {
+      usernameController.text = loginBox.getAt(0)['username'];
+      passwordController.text = loginBox.getAt(0)['password'];
+      signIn();
+    }
     return Container(
       alignment: Alignment.topCenter,
       height: 450.h,
@@ -110,8 +145,7 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                         ),
                         prefixIcon: const Icon(Icons.lock),
                         suffix: GestureDetector(
-                            onTap:
-                                widget.loginController.onHandleHidePassword,
+                            onTap: widget.loginController.onHandleHidePassword,
                             child: widget.loginController.hidePassword.value
                                 ? Icon(Icons.visibility)
                                 : Icon(Icons.visibility_off)),
@@ -234,12 +268,16 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                                 borderRadius: BorderRadius.circular(10.sp),
                               ),
                               backgroundColor: Constant.mainColor),
-                          onPressed: widget.isLogin.value == true
+                          onPressed: widget.isLogin.value
                               ? () {
-                                  context.read<LoginBloc>().add(SignIn(
-                                      userModel: UserModel(
-                                          username: usernameController.text,
-                                          password: passwordController.text)));
+                                  signIn();
+                                  _onSaveUser({
+                                    'username': usernameController.text,
+                                    'password': passwordController.text
+                                  });
+
+                                  // print(loginBox.getAt(0));
+                                  // _onDeleteUSer();
                                 }
                               : widget.loginController.value.value == 0
                                   ? null
@@ -250,13 +288,21 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                                                   box3Controller.text +
                                                   box4Controller.text) ==
                                           true) {
-                                        context.read<LoginBloc>().add(SignUp(
-                                            userModel: UserModel(
-                                                username:
-                                                    usernameController.text,
-                                                password:
-                                                    passwordController.text,
-                                                email: emailController.text)));
+                                        context.read<LoginBloc>().add(
+                                              SignUp(
+                                                userModel: UserModel(
+                                                  username:
+                                                      usernameController.text,
+                                                  password:
+                                                      passwordController.text,
+                                                  email: emailController.text,
+                                                ),
+                                              ),
+                                            );
+                                        _onSaveUser({
+                                          'username': usernameController.text,
+                                          'password': passwordController.text
+                                        });
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(

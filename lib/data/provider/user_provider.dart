@@ -33,10 +33,10 @@ class UserProvider {
       headers: {'Content-Type': 'application/json'},
     );
     final result = jsonDecode(response.body);
-    if(response.statusCode!=200){
+    if (response.statusCode != 200) {
       print('Error');
     } else {
-      if(result.length <= 1){
+      if (result.length <= 1) {
         return result['message'];
       } else {
         return UserModel.fromJson(result);

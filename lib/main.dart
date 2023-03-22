@@ -1,5 +1,7 @@
 import 'package:doulingo_fake/bloc/login/login_bloc.dart';
 import 'package:doulingo_fake/bloc/package/package_bloc.dart';
+import 'package:doulingo_fake/bloc/question/question_bloc.dart';
+import 'package:doulingo_fake/bloc/vocabulary/vocabulary_bloc.dart';
 import 'package:doulingo_fake/helper/dependencies.dart';
 import 'package:doulingo_fake/helper/route.dart';
 import 'package:doulingo_fake/views/introduce_view/introduce_page.dart';
@@ -7,8 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('duolingo');
+  await Hive.openBox('login');
+  await Hive.openBox('vocabulary');
   runApp(const Main());
 }
 
@@ -29,6 +37,12 @@ class Main extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => PackageBloc(),
+            ),
+            BlocProvider(
+              create: (context) => QuestionBloc(),
+            ),
+            BlocProvider(
+              create: (context) => VocabularyBloc(),
             )
           ],
           child: GetMaterialApp(

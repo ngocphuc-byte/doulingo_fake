@@ -14,12 +14,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
   UserModel? userModel;
   @override
   Widget build(BuildContext context) {
+
     PackageRepo packageRepo = PackageRepo();
     BottomController bottomController = Get.find();
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
@@ -61,7 +63,10 @@ class Home extends StatelessWidget {
                                     fontSize: Constant.mediumTextSize,
                                     fontWeight: Constant.boldWeight)),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                // showBottomSheet(context);
+                                print(packageModel.levels?[0].questions);
+                              },
                               icon:
                                   Icon(Icons.menu_book, color: Constant.white),
                             ),
@@ -78,7 +83,7 @@ class Home extends StatelessWidget {
                             LevelModel? item = packageModel.levels?[index];
                             bool check =
                                 item?.users?.contains(userModel?.id) as bool;
-                            if(check){
+                            if (check) {
                               indexT.add(index);
                             }
                             return LevelBoxWidget(
@@ -99,33 +104,19 @@ class Home extends StatelessWidget {
           }
           return Container();
         },
-      )
-
-          // ListView.builder(
-          //   itemCount: 10,
-          //   itemBuilder: (context, index) {
-          //     //----------------------------------------------------------------
-          //     return index % 4 == 0
-          //         ? LevelBoxWidget(
-          //             index: index,
-          //           )
-          //         //----------------------------------------------------------------
-          //         : (index % 2 != 0 && index <= 5)
-          //             ? LevelBoxWidget(
-          //                 index: index,
-          //               )
-          //             //----------------------------------------------------------------
-          //             : (index % 2 != 0 && index > 5)
-          //                 ? LevelBoxWidget(
-          //                     index: index,
-          //                   )
-          //                 //----------------------------------------------------------------
-          //                 : LevelBoxWidget(
-          //                     index: index,
-          //                   );
-          //   },
-          // ),
-          );
+      ));
     });
   }
+}
+
+void showBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    context: context,
+    builder: (context) {
+      return Card(
+        child: Column(),
+      );
+    },
+  );
 }

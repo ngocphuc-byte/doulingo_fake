@@ -1,4 +1,7 @@
 import 'package:doulingo_fake/controllers/login_controller.dart';
+import 'package:doulingo_fake/data/provider/package_provider.dart';
+import 'package:doulingo_fake/data/provider/question_provider.dart';
+import 'package:doulingo_fake/models/question_model.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/instruction_view/instuction_page.dart';
 import 'package:doulingo_fake/views/login_view/box_login.dart';

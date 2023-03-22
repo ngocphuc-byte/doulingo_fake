@@ -29,10 +29,9 @@ class HomePage extends StatelessWidget {
           () => Column(
             children: [
               TabBarWidget(),
-              if (_bottomController.currentIndex.value == 0)  Home(),
-              if (_bottomController.currentIndex.value == 1) const BoxPage(),
-              if (_bottomController.currentIndex.value == 2)
-                const InformationPage(),
+              if (_bottomController.currentIndex.value == 0) Home(),
+              if (_bottomController.currentIndex.value == 1) BoxPage(),
+              if (_bottomController.currentIndex.value == 2) InformationPage(),
               if (_bottomController.currentIndex.value == 3)
                 const NotificationPage(),
               if (_bottomController.currentIndex.value == 4)
