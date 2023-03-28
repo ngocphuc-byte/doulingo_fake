@@ -1,11 +1,12 @@
+import 'package:doulingo_fake/models/blog_model.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CardNotification extends StatelessWidget {
-  const CardNotification({super.key});
-
+  CardNotification({super.key, required this.blogModel});
+  BlogModel blogModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +40,7 @@ class CardNotification extends StatelessWidget {
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(10.sp),
               child: Text(
-                '2 ngày',
+                '${blogModel.createdAt?.substring(0, 10)}',
                 style: GoogleFonts.lato(
                   color: Constant.grey,
                   fontSize: Constant.smallTextSize,
@@ -48,13 +49,39 @@ class CardNotification extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.all(10.sp),
-              child: Text(
-                'Mẹo: lặp đi lặp lại từng câu thật to trong bài học bạn nhé',
-                style: GoogleFonts.lato(
-                  fontSize: Constant.smallTextSize,
-                  color: Constant.white,
-                  fontWeight: Constant.midWeight,
-                ),
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Chủ đề: ${blogModel.title}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.lato(
+                      fontSize: Constant.smallTextSize,
+                      color: Constant.white,
+                      fontWeight: Constant.midWeight,
+                    ),
+                  ),
+                  Text(
+                    'Mô tả: ${blogModel.snippet}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.lato(
+                      fontSize: Constant.smallTextSize,
+                      color: Constant.white,
+                      fontWeight: Constant.midWeight,
+                    ),
+                  ),
+                  Text(
+                    'Nội dung: ${blogModel.body}',
+                    style: GoogleFonts.lato(
+                      fontSize: Constant.smallTextSize,
+                      color: Constant.white,
+                      fontWeight: Constant.midWeight,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

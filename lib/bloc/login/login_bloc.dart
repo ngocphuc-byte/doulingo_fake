@@ -24,7 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future _onSignUp(SignUp event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
-    final user = await userRepo.createUserRepo(event.userModel);
+    final user = await userRepo.signUpAuthRepo(event.userModel);
     if (user is String) {
       emit(LoginError(error: user));
     } else {
@@ -34,7 +34,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future _onSignIn(SignIn event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
-    final user = await userRepo.signInRepo(event.userModel);
+    final user = await userRepo.signInAuthRepo(event.userModel);
     if (user is String) {
       emit(LoginError(error: user));
     } else {

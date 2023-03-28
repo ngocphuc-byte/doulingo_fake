@@ -4,6 +4,7 @@ import 'package:doulingo_fake/views/instruction_view/instuction_page.dart';
 import 'package:doulingo_fake/views/introduce_view/introduce_page.dart';
 import 'package:doulingo_fake/views/login_view/login_page.dart';
 import 'package:doulingo_fake/views/login_view/signup_page.dart';
+import 'package:doulingo_fake/views/notification_view/form_page.dart';
 import 'package:doulingo_fake/views/room_view/room_page.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class RoutePage {
   static String instructionPage = '/instruction';
   static String homePage = '/homePage';
   static String roomPage = '/roomPage';
+  static String formPage = '/formPage';
 
   static List<GetPage> listRoutePage = [
     GetPage(
@@ -42,6 +44,10 @@ class RoutePage {
         LevelModel levelModel = Get.arguments;
         return RoomPage(levelModel: levelModel);
       },
+    ),
+    GetPage(
+      name: formPage,
+      page: () =>  FormPage(),
     ),
   ];
 }

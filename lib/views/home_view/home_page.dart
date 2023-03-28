@@ -3,6 +3,7 @@ import 'package:doulingo_fake/controllers/bottom_controller.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/home_view/bottom_tab.dart';
 import 'package:doulingo_fake/views/box_view/box.dart';
+import 'package:doulingo_fake/views/notification_view/text_field_notification.dart';
 import 'package:doulingo_fake/views/information_view/information.dart';
 import 'package:doulingo_fake/views/notification_view/notification.dart';
 import 'package:doulingo_fake/views/setting_view/setting.dart';
@@ -41,22 +42,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const BottomTabWidget(),
-      floatingActionButton: Obx(
-        () => Container(
-          child: _bottomController.indexScroll > 4
-              ? FloatingActionButton(
-                  child: Icon(
-                    Icons.keyboard_double_arrow_up_sharp,
-                    size: 28.sp,
-                    color: Constant.white,
-                  ),
-                  onPressed: () {
-                    _bottomController.toHeadPage();
-                  },
-                )
-              : null,
-        ),
-      ),
     );
   }
 }

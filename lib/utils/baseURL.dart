@@ -6,12 +6,18 @@ class BaseURL {
   static String packageURL = '$baseURL/packages';
   static String questionURL = '$baseURL/questions';
   static String levelURL = '$baseURL/levels';
+  static String blogURL = '$baseURL/blogs';
 
   String userSignUpURL = '$userURL/create';
   String userSignInURL = '$userURL/checkUser';
+  String userAuthSignUpURL = '$userURL/signup';
+  String userAuthSignInURL = '$userURL/login';
 
   String packageGetAllURL = '$packageURL/getLevels';
   String packageUpdateAllURL = '$levelURL/updateUserLevel';
 
   String questionGetURL = '$questionURL/';
+
+  String blogGetURL = '$blogURL/getBlogs';
+  String blogCreateURL = '$blogURL/createBlog';
 }

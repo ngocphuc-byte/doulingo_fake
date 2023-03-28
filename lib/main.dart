@@ -1,3 +1,4 @@
+import 'package:doulingo_fake/bloc/blog/blog_bloc.dart';
 import 'package:doulingo_fake/bloc/login/login_bloc.dart';
 import 'package:doulingo_fake/bloc/package/package_bloc.dart';
 import 'package:doulingo_fake/bloc/question/question_bloc.dart';
@@ -14,7 +15,6 @@ import 'package:hive_flutter/adapters.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox('duolingo');
   await Hive.openBox('login');
   await Hive.openBox('vocabulary');
   runApp(const Main());
@@ -43,7 +43,10 @@ class Main extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => VocabularyBloc(),
-            )
+            ),
+            BlocProvider(
+              create: (context) => BlogBloc(),
+            ),
           ],
           child: GetMaterialApp(
             initialBinding: Dependencies(),

@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:doulingo_fake/models/user_model.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 part '../../utils/baseURL.dart';
 
 class UserProvider {
   BaseURL baseURL = BaseURL();
+  final dio = Dio();
   Future createUserProvider(UserModel userModel) async {
     final url = Uri.parse(baseURL.userSignUpURL);
     final response = await http.post(
@@ -41,6 +44,75 @@ class UserProvider {
       } else {
         return UserModel.fromJson(result);
       }
+    }
+  }
+
+  Future signUpAuthProvider(UserModel userModel) async {
+    try {
+      final response = await dio.post(baseURL.userAuthSignUpURL,
+          data: userModel,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            // 'Authorization' : 'Bearer'
+          }));
+      if (response.statusCode == 200) {
+        if (response.data['user'].length == 1) {
+          return response.data['user']['message'];
+        }
+        if (loginBox.length >= 1) {
+          await loginBox.putAt(0, {
+            'username': userModel.username,
+            'password': userModel.password,
+            'token': response.data['token']
+          });
+        } else {
+          await loginBox.add({
+            'username': userModel.username,
+            'password': userModel.password,
+            'token': response.data['token']
+          });
+        }
+        return UserModel.fromJson(response.data['user']);
+      } else {
+        return response.data;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final loginBox = Hive.box('login');
+
+  Future signInAuthProvider(UserModel userModel) async {
+    try {
+      final response = await dio.post(baseURL.userAuthSignInURL,
+          data: userModel,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+          }));
+      if (response.statusCode == 200) {
+        if (response.data['user'].length == 1) {
+          return response.data['user']['message'];
+        }
+        if (loginBox.length >= 1) {
+          await loginBox.putAt(0, {
+            'username': userModel.username,
+            'password': userModel.password,
+            'token': response.data['token']
+          });
+        } else {
+          await loginBox.add({
+            'username': userModel.username,
+            'password': userModel.password,
+            'token': response.data['token']
+          });
+        }
+        return UserModel.fromJson(response.data['user']);
+      } else {
+        return response.data;
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

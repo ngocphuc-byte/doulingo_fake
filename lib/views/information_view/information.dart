@@ -3,6 +3,7 @@ import 'package:doulingo_fake/helper/route.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:doulingo_fake/views/information_view/achievement._widget.dart';
 import 'package:doulingo_fake/views/information_view/header_information.dart';
+import 'package:doulingo_fake/views/notification_view/text_field_notification.dart';
 import 'package:doulingo_fake/widgets/box_information_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ class InformationPage extends StatelessWidget {
     await loginBox.deleteAt(0);
   }
 
+  TextEditingController usernameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
@@ -57,110 +59,54 @@ class InformationPage extends StatelessWidget {
                     BlocBuilder<LoginBloc, LoginState>(
                       builder: (context, state) {
                         return Container(
-                          height: 60.h,
-                          margin: EdgeInsets.only(top: 8.h),
-                          padding: EdgeInsets.only(
-                              left: 10.w, right: 10.w, bottom: 15.h),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                width: 1,
-                                color: Constant.grey.withOpacity(0.5),
+                            height: 60.h,
+                            alignment: Alignment.centerRight,
+                            margin: EdgeInsets.only(top: 8.h),
+                            padding: EdgeInsets.only(
+                                left: 10.w, right: 10.w, bottom: 15.h),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  width: 1,
+                                  color: Constant.grey.withOpacity(0.5),
+                                ),
                               ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print('hehe');
-                                },
-                                child: Container(
-                                  width: 250.w,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Constant.mainColor,
-                                    borderRadius: BorderRadius.circular(10.sp),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        offset: Offset(0, 3),
-                                        color: Colors.blueGrey,
-                                        spreadRadius: 1,
-                                      ),
-                                      BoxShadow(
-                                        offset: Offset(3, 0),
-                                        color: Colors.blueGrey,
-                                        spreadRadius: 1,
-                                      ),
-                                      BoxShadow(
-                                        offset: Offset(-3, 0),
-                                        color: Colors.blueGrey,
-                                        spreadRadius: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Icon(
-                                        Icons.edit,
-                                        color: Constant.lightBlue,
-                                        size: 24.sp,
-                                      ),
-                                      Text(
-                                        'Chỉnh sửa thông tin',
-                                        style: GoogleFonts.sourceSans3(
-                                          fontSize: Constant.mediumTextSize,
-                                          color: Constant.lightBlue,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                            child: GestureDetector(
+                              onTap: () {
+                                context.read<LoginBloc>().add(SignOut());
+                              },
+                              child: Container(
+                                width: 50.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Constant.mainColor,
+                                  borderRadius: BorderRadius.circular(10.sp),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 3),
+                                      color: Colors.blueGrey,
+                                      spreadRadius: 1,
+                                    ),
+                                    BoxShadow(
+                                      offset: Offset(3, 0),
+                                      color: Colors.blueGrey,
+                                      spreadRadius: 1,
+                                    ),
+                                    BoxShadow(
+                                      offset: Offset(-3, 0),
+                                      color: Colors.blueGrey,
+                                      spreadRadius: 1,
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  Icons.logout,
+                                  color: Constant.lightBlue,
+                                  size: 24.sp,
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  context.read<LoginBloc>().add(SignOut());
-                                },
-                                child: Container(
-                                  width: 50.w,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Constant.mainColor,
-                                    borderRadius: BorderRadius.circular(10.sp),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        offset: Offset(0, 3),
-                                        color: Colors.blueGrey,
-                                        spreadRadius: 1,
-                                      ),
-                                      BoxShadow(
-                                        offset: Offset(3, 0),
-                                        color: Colors.blueGrey,
-                                        spreadRadius: 1,
-                                      ),
-                                      BoxShadow(
-                                        offset: Offset(-3, 0),
-                                        color: Colors.blueGrey,
-                                        spreadRadius: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.logout,
-                                    color: Constant.lightBlue,
-                                    size: 24.sp,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
+                            ));
                       },
                     ),
                     Container(

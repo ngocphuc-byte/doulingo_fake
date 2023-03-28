@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:doulingo_fake/bloc/login/login_bloc.dart';
 import 'package:doulingo_fake/controllers/login_controller.dart';
+import 'package:doulingo_fake/data/provider/blog_provider.dart';
 import 'package:doulingo_fake/data/provider/user_provider.dart';
 import 'package:doulingo_fake/data/repository/user_repo.dart';
 import 'package:doulingo_fake/models/user_model.dart';
@@ -43,6 +44,7 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
 
   EmailOTP myauth = EmailOTP();
 
+
   final loginBox = Hive.box('login');
 
   Future<void> _onSaveUser(Map<String, dynamic> account) async {
@@ -70,8 +72,22 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
     }));
   }
 
+  Future<void> signUp() async {
+    context.read<LoginBloc>().add(
+          SignUp(
+            userModel: UserModel(
+              username: usernameController.text,
+              password: passwordController.text,
+              email: emailController.text,
+            ),
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
+    
+  
     if (loginBox.length != 0) {
       usernameController.text = loginBox.getAt(0)['username'];
       passwordController.text = loginBox.getAt(0)['password'];
@@ -269,13 +285,8 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                               ),
                               backgroundColor: Constant.mainColor),
                           onPressed: widget.isLogin.value
-                              ? () {
+                              ? () async {
                                   signIn();
-                                  _onSaveUser({
-                                    'username': usernameController.text,
-                                    'password': passwordController.text
-                                  });
-
                                   // print(loginBox.getAt(0));
                                   // _onDeleteUSer();
                                 }
@@ -288,21 +299,7 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                                                   box3Controller.text +
                                                   box4Controller.text) ==
                                           true) {
-                                        context.read<LoginBloc>().add(
-                                              SignUp(
-                                                userModel: UserModel(
-                                                  username:
-                                                      usernameController.text,
-                                                  password:
-                                                      passwordController.text,
-                                                  email: emailController.text,
-                                                ),
-                                              ),
-                                            );
-                                        _onSaveUser({
-                                          'username': usernameController.text,
-                                          'password': passwordController.text
-                                        });
+                                        signUp();
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
