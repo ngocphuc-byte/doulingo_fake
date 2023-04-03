@@ -12,6 +12,8 @@ class BaseURL {
   String userSignInURL = '$userURL/checkUser';
   String userAuthSignUpURL = '$userURL/signup';
   String userAuthSignInURL = '$userURL/login';
+  String userAuthGoogleURL = '$userURL/signinGoogle';
+  String userUpdateImageURL = '$userURL/updateImage';
 
   String packageGetAllURL = '$packageURL/getLevels';
   String packageUpdateAllURL = '$levelURL/updateUserLevel';
@@ -20,4 +22,6 @@ class BaseURL {
 
   String blogGetURL = '$blogURL/getBlogs';
   String blogCreateURL = '$blogURL/createBlog';
+  String blogUpdateURL = '$blogURL/editBlog';
+  String blogRemoveURL = '$blogURL/removeBlog';
 }

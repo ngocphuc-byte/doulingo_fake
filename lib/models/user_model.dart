@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
-  String? id, username, password, email, createdAt, updatedAt;
+  String? id, username, password, email, createdAt, updatedAt, image;
   bool? isOld;
   UserModel(
       {required this.username,
-      required this.password,
+      this.password,
       this.id,
       this.email,
       this.isOld,
@@ -18,6 +18,7 @@ class UserModel {
     isOld = json['isOld'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    image = json['image'];
   }
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = new Map<String, dynamic>();

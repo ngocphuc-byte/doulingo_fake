@@ -1,3 +1,4 @@
+import 'package:doulingo_fake/models/blog_model.dart';
 import 'package:doulingo_fake/models/level_model.dart';
 import 'package:doulingo_fake/views/home_view/home_page.dart';
 import 'package:doulingo_fake/views/instruction_view/instuction_page.dart';
@@ -47,7 +48,12 @@ class RoutePage {
     ),
     GetPage(
       name: formPage,
-      page: () =>  FormPage(),
+      page: () {
+        BlogModel? _blogModel = Get.arguments;
+        return FormPage(
+          blogModel: _blogModel,
+        );
+      },
     ),
   ];
 }

@@ -7,9 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FormPage extends StatelessWidget {
-  FormPage({super.key});
+  FormPage({super.key, this.blogModel});
+  BlogModel? blogModel;
+
   TextEditingController titleController = TextEditingController();
   TextEditingController snippetController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
@@ -43,42 +46,77 @@ class FormPage extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    TextFieldNotification(
-                      label: 'Chủ đề:',
-                      textController: titleController,
-                      isBool: false,
+                    TextField(
+                      controller: titleController,
+                      decoration: InputDecoration(
+                          label: Text(
+                            'Chủ đề:',
+                            style:
+                                GoogleFonts.sourceSans3(color: Constant.white),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Constant.grey)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Constant.grey))),
                     ),
                     SizedBox(height: 10.h),
-                    TextFieldNotification(
-                      label: 'Mô tả:',
-                      textController: snippetController,
-                      isBool: false,
+                    TextField(
+                      controller: snippetController,
+                      decoration: InputDecoration(
+                          label: Text(
+                            'Mô tả:',
+                            style:
+                                GoogleFonts.sourceSans3(color: Constant.white),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Constant.grey)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Constant.grey))),
                     ),
                     SizedBox(height: 10.h),
                     SizedBox(
-                        height: 100.h,
-                        child: TextFieldNotification(
-                          label: 'Nội dung:',
-                          textController: bodyController,
-                          isBool: true,
-                        )),
+                      height: 100.h,
+                      child: TextField(
+                        controller: bodyController,
+                        decoration: InputDecoration(
+                            label: Text(
+                              'Nội dung:',
+                              style: GoogleFonts.sourceSans3(
+                                  color: Constant.white),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Constant.grey)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Constant.grey))),
+                        keyboardType: TextInputType.multiline,
+                      ),
+                    ),
                     SizedBox(height: 10.h),
                   ],
                 ),
                 Container(
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      context.read<BlogBloc>().add(
-                            CreateBlog(
-                              blogModel: BlogModel(
-                                  title: titleController.text,
-                                  snippet: snippetController.text,
-                                  body: bodyController.text),
-                            ),
-                          );
+                      blogModel != null
+                          ? context.read<BlogBloc>().add(UpdateBlog(
+                                  blogModel: BlogModel(
+                                id: blogModel!.id,
+                                title: titleController.text,
+                                snippet: snippetController.text,
+                                body: bodyController.text,
+                              )))
+                          : context.read<BlogBloc>().add(
+                                CreateBlog(
+                                  blogModel: BlogModel(
+                                      title: titleController.text,
+                                      snippet: snippetController.text,
+                                      body: bodyController.text),
+                                ),
+                              );
                     },
-                    icon: const Icon(Icons.check),
-                    label: const Text('Thêm Blog'),
+                    icon:
+                        Icon(blogModel != null ? Icons.edit_note : Icons.check),
+                    label: Text(blogModel != null ? 'Chỉnh sửa' : 'Thêm Blog'),
                   ),
                 )
               ],

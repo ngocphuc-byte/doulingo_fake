@@ -15,7 +15,9 @@ class BoxPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+    
       child: BlocBuilder<VocabularyBloc, VocabularyState>(
+        
         builder: (context, state) {
           if (state is VocabularyLoading || state is VocabularyInitial) {
             context.watch<VocabularyBloc>().add(GetVocabulary());

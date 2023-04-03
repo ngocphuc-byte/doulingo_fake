@@ -10,4 +10,12 @@ class BlogRepo {
   Future createBlogRepo(BlogModel blogModel) async {
     return blogProvider.createBlog(blogModel);
   }
+
+  Future updateBlog(BlogModel blogModel) async {
+    return blogProvider.updateBlog(blogModel);
+  }
+
+  Future removeBlog(String id) async {
+    return blogProvider.removeBlog(id);
+  }
 }

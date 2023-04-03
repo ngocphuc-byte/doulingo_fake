@@ -17,6 +17,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('login');
   await Hive.openBox('vocabulary');
+
   runApp(const Main());
 }
 

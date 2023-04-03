@@ -13,6 +13,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
 
@@ -44,58 +46,55 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
 
   EmailOTP myauth = EmailOTP();
 
-
   final loginBox = Hive.box('login');
 
-  Future<void> _onSaveUser(Map<String, dynamic> account) async {
-    if (loginBox.length >= 1) {
-      print('has data ${loginBox.length}');
-    } else {
-      await loginBox.add(account);
-    }
-  }
+  // Future<void> _onSaveUser(Map<String, dynamic> account) async {
+  //   if (loginBox.length >= 1) {
+  //     print('has data ${loginBox.length}');
+  //   } else {
+  //     await loginBox.add(account);
+  //   }
+  // }
 
-  Future<void> _onDeleteUSer() async {
-    await loginBox.deleteAt(0);
-  }
+  // Future<void> _onDeleteUSer() async {
+  //   await loginBox.deleteAt(0);
+  // }
 
-  void signIn() async {
-    Future.delayed(Duration(seconds: 3), (() {
-      context.read<LoginBloc>().add(
-            SignIn(
-              userModel: UserModel(
-                username: usernameController.text,
-                password: passwordController.text,
-              ),
-            ),
-          );
-    }));
-  }
+  // void signIn({required username, required password}) async {
+  //   Future.delayed(Duration(seconds: 3), (() {
+  //     context.read<LoginBloc>().add(
+  //           SignIn(
+  //             userModel: UserModel(
+  //               username: username,
+  //               password: password,
+  //             ),
+  //           ),
+  //         );
+  //   }));
+  // }
 
-  Future<void> signUp() async {
-    context.read<LoginBloc>().add(
-          SignUp(
-            userModel: UserModel(
-              username: usernameController.text,
-              password: passwordController.text,
-              email: emailController.text,
-            ),
-          ),
-        );
-  }
+  // Future<void> signUp() async {
+  //   context.read<LoginBloc>().add(
+  //         SignUp(
+  //           userModel: UserModel(
+  //             username: usernameController.text,
+  //             password: passwordController.text,
+  //             email: emailController.text,
+  //           ),
+  //         ),
+  //       );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    
-  
     if (loginBox.length != 0) {
-      usernameController.text = loginBox.getAt(0)['username'];
-      passwordController.text = loginBox.getAt(0)['password'];
-      signIn();
+      widget.loginController.signIn(context,
+          username: loginBox.getAt(0)['username'],
+          password: loginBox.getAt(0)['password']);
     }
     return Container(
       alignment: Alignment.topCenter,
-      height: 450.h,
+      height: 550.h,
       width: double.maxFinite,
       child: Column(
         children: [
@@ -124,6 +123,7 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextField(
+                    style: GoogleFonts.sourceSans3(color: Constant.lightBlue),
                     controller: usernameController,
                     decoration: InputDecoration(
                       label: const Text('Tài khoản'),
@@ -143,6 +143,7 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                   ),
                   Obx(
                     () => TextField(
+                      style: GoogleFonts.sourceSans3(color: Constant.lightBlue),
                       controller: passwordController,
                       obscureText: widget.loginController.hidePassword.value,
                       decoration: InputDecoration(
@@ -171,6 +172,7 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                   widget.isLogin.value
                       ? SizedBox()
                       : TextField(
+                        style: GoogleFonts.sourceSans3(color: Constant.lightBlue),
                           controller: emailController,
                           onChanged: (value) => widget.loginController
                               .onChangeEmail(value.length),
@@ -286,7 +288,9 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                               backgroundColor: Constant.mainColor),
                           onPressed: widget.isLogin.value
                               ? () async {
-                                  signIn();
+                                  widget.loginController.signIn(context,
+                                      username: usernameController.text,
+                                      password: passwordController.text);
                                   // print(loginBox.getAt(0));
                                   // _onDeleteUSer();
                                 }
@@ -299,7 +303,10 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                                                   box3Controller.text +
                                                   box4Controller.text) ==
                                           true) {
-                                        signUp();
+                                        widget.loginController.signUp(context,
+                                            username: usernameController.text,
+                                            password: passwordController.text,
+                                            email: emailController.text);
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
@@ -325,7 +332,34 @@ class _BoxLoginWidgetState extends State<BoxLoginWidget> {
                 ],
               ),
             ),
-          )
+          ),
+          SizedBox(
+              height: 50.h,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 183, 205, 219)),
+                onPressed: () async {
+                  final _googleSignIn = GoogleSignIn();
+                  final user = await _googleSignIn.signIn();
+                  context.read<LoginBloc>().add(
+                        SignInGoogle(
+                          userModel: UserModel(
+                            username: user?.displayName,
+                            email: user?.email,
+                            password: '♪♪♪♪♪♪',
+                          ),
+                        ),
+                      );
+                },
+                icon: Image.asset('assets/images/google_logo.png'),
+                label: Text(
+                  'Sign in with Google',
+                  style: GoogleFonts.sourceSans3(
+                      fontWeight: Constant.boldWeight,
+                      fontSize: Constant.mediumTextSize,
+                      color: Colors.black),
+                ),
+              )),
         ],
       ),
     );

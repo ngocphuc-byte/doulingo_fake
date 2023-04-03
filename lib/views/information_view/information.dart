@@ -40,6 +40,7 @@ class InformationPage extends StatelessWidget {
               floating: true,
               pinned: true,
               // stretch: true,
+
               toolbarHeight: 100.h,
               elevation: 20,
               // snap: true,

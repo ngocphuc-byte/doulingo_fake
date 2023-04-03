@@ -22,3 +22,5 @@ class BlogSuccess extends BlogState {
   String? message;
   BlogSuccess({required this.message});
 }
+
+class BlogFailed extends BlogState {}

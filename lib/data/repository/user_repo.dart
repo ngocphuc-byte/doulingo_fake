@@ -10,11 +10,15 @@ class UserRepo {
     return UserProvider().signInUserProvider(userModel);
   }
 
-  Future signUpAuthRepo(UserModel userModel) async {
-    return UserProvider().signUpAuthProvider(userModel);
+  // Future signUpAuthRepo(UserModel userModel) async {
+  //   return UserProvider().signUpAuthProvider(userModel);
+  // }
+
+  Future signInAuthRepo(UserModel userModel, String url) async {
+    return UserProvider().signInAuthProvider(userModel, url);
   }
 
-  Future signInAuthRepo(UserModel userModel) async {
-    return UserProvider().signInAuthProvider(userModel);
+  Future updateImageRepo({required String image}) async {
+    return UserProvider().updateImageProvider(image: image);
   }
 }

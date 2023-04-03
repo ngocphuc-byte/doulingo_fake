@@ -1,9 +1,12 @@
 import 'package:doulingo_fake/bloc/login/login_bloc.dart';
+import 'package:doulingo_fake/controllers/information_controller.dart';
+import 'package:doulingo_fake/data/provider/user_provider.dart';
 import 'package:doulingo_fake/models/user_model.dart';
 import 'package:doulingo_fake/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HeaderInformation extends StatelessWidget {
@@ -11,6 +14,7 @@ class HeaderInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InformationController informationController = Get.put(InformationController());
     late UserModel userModel;
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
@@ -62,10 +66,15 @@ class HeaderInformation extends StatelessWidget {
                   ],
                 ),
               ),
-              CircleAvatar(
-                radius: 35.sp,
-                backgroundImage: const NetworkImage(
-                    'https://images2.thanhnien.vn/Uploaded/tuyenth/2022_11_02/a5-5205.png'),
+              GestureDetector(
+                onTap: () {
+                  informationController.showModelBottom(context);
+                },
+                child: CircleAvatar(
+                  radius: 35.sp,
+                  backgroundImage: NetworkImage('${userModel.image}'),
+                  child: Opacity(opacity: 0.7, child: Icon(Icons.edit)),
+                ),
               ),
             ],
           ),

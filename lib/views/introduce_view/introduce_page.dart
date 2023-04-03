@@ -1,10 +1,6 @@
-import 'dart:async';
 
 import 'package:doulingo_fake/controllers/bottom_controller.dart';
-import 'package:doulingo_fake/data/provider/question_provider.dart';
-import 'package:doulingo_fake/helper/route.dart';
 import 'package:doulingo_fake/utils/constant.dart';
-import 'package:doulingo_fake/views/login_view/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';

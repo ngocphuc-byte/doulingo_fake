@@ -21,6 +21,11 @@
             "type": "dart",
             "flutterMode": "release"
         },
+        // {
+        //     "name": "native_code",
+        //     "request": "launch",
+        //     "type": "dart"
+        // },
         {
             "name": "Android1",
             "request": "launch",

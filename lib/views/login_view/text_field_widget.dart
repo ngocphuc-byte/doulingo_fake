@@ -7,6 +7,7 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      
       controller: box,
       keyboardType: TextInputType.number,
       textAlign: TextAlign.center,

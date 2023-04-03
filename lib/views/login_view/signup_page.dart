@@ -48,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage>
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Header(title: 'Đăng ký tài khoản ở đây bạn nhé !!!'),
+            Header(),
             BoxLoginWidget(
               loginController: loginController,
               textButton: 'Sign up',

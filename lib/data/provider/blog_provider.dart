@@ -54,4 +54,39 @@ class BlogProvider {
       print(e);
     }
   }
+
+  Future updateBlog(BlogModel blogModel) async {
+    final token = loginBox.getAt(0)['token'];
+    try {
+      final response = await dio.post(
+        baseURL.blogUpdateURL,
+        data: blogModel,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        }),
+      );
+      return response.data;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future removeBlog(String id) async {
+    final token = loginBox.getAt(0)['token'];
+    try {
+      final response = await dio.post(
+        baseURL.blogRemoveURL,
+        data: {'_id': id},
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        }),
+      );
+      print(response.data);
+      return response.data;
+    } catch (e) {
+      print(e);
+    }
+  }
 }

@@ -24,14 +24,12 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Header(
-                title:
-                    'Hãy đăng nhập và chúng ta sẽ đồng hành cùng nhau bạn nhé !!!'),
+            const Header(),
             BoxLoginWidget(
               loginController: loginController,
               textButton: 'Login',
               isLogin: isLogin,
-            )
+            ),
           ],
         ),
       ),

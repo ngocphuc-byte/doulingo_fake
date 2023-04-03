@@ -11,6 +11,7 @@ class LevelModel {
     id = json['_id'];
     users = json['user'].cast<String>();
     questions = json['questions'].cast<String>();
+    
     dayTask = json['dayTask'];
   }
   
